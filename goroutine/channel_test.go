@@ -112,3 +112,34 @@ func TestRangeChannel(t *testing.T) {
 	fmt.Println("process was done 👋")
 
 }
+
+func TestSelectChannel(t *testing.T) {
+	channel1 := make(chan string)
+	channel2 := make(chan string)
+
+	defer close(channel1)
+	defer close(channel2)
+
+	go GivmeResponse(channel1)
+	go GivmeResponse(channel2)
+
+	counter := 0
+	for {
+		select {
+		case data := <-channel1:
+
+			fmt.Println("data from channel 1 =>", data)
+			counter++ //for stop infinite loop
+
+		case data := <-channel2:
+			fmt.Println("data from channel 2 =>", data)
+			counter++ //for stop infinite loop
+		}
+
+		//stop infinity loop
+		if counter == 2 {
+			break
+		}
+
+	}
+}
