@@ -20,6 +20,7 @@ func TestWaitGroup(t *testing.T) {
 	wg := &sync.WaitGroup{}
 
 	for i := 1; i < 100; i++ {
+
 		go RunAsync(i, wg)
 
 	}
