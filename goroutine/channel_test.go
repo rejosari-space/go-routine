@@ -50,6 +50,7 @@ func TestChannelOnlyInAndOut(t *testing.T) {
 
 }
 
+// set capacity as temporary storage for channel
 func TestBufferedChannel(t *testing.T) {
 	channel := make(chan string, 3)
 	defer close(channel)
@@ -60,5 +61,33 @@ func TestBufferedChannel(t *testing.T) {
 
 	fmt.Println("data from channel =>", <-channel)
 	fmt.Println("data from channel =>", <-channel)
+
+}
+
+// with goroutine
+func TestBufferedChannelGoroutine(t *testing.T) {
+	channel := make(chan string, 3)
+	defer close(channel)
+
+	// sender
+	go func() {
+		channel <- "abdul"
+		channel <- "aziz"
+		channel <- "ganteng banget"
+
+	}()
+
+	// receiver
+	go func() {
+
+		fmt.Println("data from channel =>", <-channel)
+		fmt.Println("data from channel =>", <-channel)
+		fmt.Println("data from channel =>", <-channel)
+
+	}()
+
+	time.Sleep(2 * time.Second)
+
+	fmt.Println("process was done 👋")
 
 }
