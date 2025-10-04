@@ -93,6 +93,7 @@ func TestBufferedChannelGoroutine(t *testing.T) {
 
 }
 
+// range channel is used to receive data when we dont know how many data will be sent
 func TestRangeChannel(t *testing.T) {
 	channel := make(chan string)
 
