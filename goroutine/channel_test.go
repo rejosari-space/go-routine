@@ -2,6 +2,7 @@ package goroutine
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -87,6 +88,25 @@ func TestBufferedChannelGoroutine(t *testing.T) {
 	}()
 
 	time.Sleep(2 * time.Second)
+
+	fmt.Println("process was done 👋")
+
+}
+
+func TestRangeChannel(t *testing.T) {
+	channel := make(chan string)
+
+	go func() {
+		for i := 0; i < 10; i++ {
+			channel <- "this data with id " + strconv.Itoa(i)
+		}
+
+		close(channel) //must be clolose in here if using range
+	}()
+
+	for data := range channel {
+		fmt.Println("thisis data from channel =>", data)
+	}
 
 	fmt.Println("process was done 👋")
 
