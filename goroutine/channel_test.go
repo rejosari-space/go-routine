@@ -49,3 +49,16 @@ func TestChannelOnlyInAndOut(t *testing.T) {
 	time.Sleep(5 * time.Second)
 
 }
+
+func TestBufferedChannel(t *testing.T) {
+	channel := make(chan string, 3)
+	defer close(channel)
+
+	channel <- "abdul"
+	channel <- "aziz"
+	channel <- "ganteng"
+
+	fmt.Println("data from channel =>", <-channel)
+	fmt.Println("data from channel =>", <-channel)
+
+}
